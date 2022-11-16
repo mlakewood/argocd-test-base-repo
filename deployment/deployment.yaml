@@ -20,10 +20,10 @@ spec:
         runAsUser: 1000
       containers:
         - name: python-demo-app-web
-          image: python-demo-app:init
+          image: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test:122b297
           ports:
-            - name: gunicorn
-              containerPort: 8000
+            - name: webserver
+              containerPort: 5000
           resources:
             requests:
               memory: 128Mi
@@ -34,12 +34,5 @@ spec:
           readinessProbe:
             initialDelaySeconds: 10
             httpGet:
-              port: gunicorn
+              port: webserver
               path: /
-          livenessProbe:
-            initialDelaySeconds: 10
-            exec:
-              command:
-                - /bin/sh
-                - -c 
-                - "pidof -x gunicorn"

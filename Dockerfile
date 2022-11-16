@@ -16,4 +16,4 @@ RUN venv/bin/python -m pip install -r requirements.txt
 
 COPY base_app.py /home/webapp/base_app.py
 
-CMD venv/bin/python -m flask --app base_app run
+CMD venv/bin/python -m flask --app base_app run -h 0.0.0.0 -p 5000
