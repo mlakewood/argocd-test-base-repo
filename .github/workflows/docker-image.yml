@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Build Image
+    name: Build and Publish Image
     runs-on: self-hosted
 
     steps:
@@ -37,6 +37,18 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA
 
+
+  test:
+    name: Test images
+    runs-on: self-hosted
+    steps:
+      - name: Unit tests
+        run: echo "looks like you havent run any tests??"
+
+  deploy:
+    name: deploy the container
+    runs-on: self-hosted
+    steps:
       - name: 'Kustomize Build'
         id: kustomize
         uses: karancode/kustomize-github-action@master
@@ -44,7 +56,7 @@ jobs:
           kustomize_version: '4.5.7'
           kustomize_build_dir: 'deployment'
           kustomize_comment: true
-          kustomize_output_file: "new_deployment/rendered.yaml"
+          kustomize_output_file: "new_deployment/deployment.yaml"
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
 
