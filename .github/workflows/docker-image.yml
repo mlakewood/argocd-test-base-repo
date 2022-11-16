@@ -36,3 +36,14 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA
+
+      - name: 'Kustomize Build'
+        uses: karancode/kustomize-github-action@master
+        with:
+          kustomize_version: '4.5.7'
+          kustomize_build_dir: 'deployment'
+          kustomize_comment: true
+          kustomize_output_file: "deployment/rendered.yaml"
+          enable_alpha_plugins: true
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}

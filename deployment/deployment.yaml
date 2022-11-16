@@ -19,8 +19,8 @@ spec:
         runAsGroup: 1000
         runAsUser: 1000
       containers:
-        - name: python-demo-app-web
-          image: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test:122b297
+        - name: python-demo-app
+          image: python-demo-app
           ports:
             - name: webserver
               containerPort: 5000
