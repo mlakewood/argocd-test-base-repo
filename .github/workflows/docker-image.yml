@@ -33,5 +33,5 @@ jobs:
           IMAGE_TAG: simple-flask-test
           GIT_SHA: ${{ steps.vars.outputs.sha_short }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$GIT_SHA .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$GIT_SHA
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}-$GIT_SHA .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}-$GIT_SHA
