@@ -32,6 +32,7 @@ jobs:
           ECR_REPOSITORY: argocd-test
           IMAGE_TAG: simple-flask-test
           GIT_SHA: ${{ steps.vars.outputs.sha_short }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}-$GIT_SHA .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}-$GIT_SHA
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA
