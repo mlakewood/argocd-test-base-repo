@@ -36,19 +36,10 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA
-
-
-  test:
-    name: Test images
-    runs-on: self-hosted
-    steps:
+  
       - name: Unit tests
         run: echo "looks like you havent run any tests??"
-
-  deploy:
-    name: deploy the container
-    runs-on: self-hosted
-    steps:
+  
       - name: 'Kustomize Build'
         id: kustomize
         uses: karancode/kustomize-github-action@master
