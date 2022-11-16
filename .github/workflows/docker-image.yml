@@ -1,4 +1,4 @@
-name: Deploy to ECR
+name: Deploy to python demo app
 
 on:
   push:
