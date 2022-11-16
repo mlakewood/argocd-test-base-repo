@@ -38,12 +38,24 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA
 
       - name: 'Kustomize Build'
+        id: kustomize
         uses: karancode/kustomize-github-action@master
         with:
           kustomize_version: '4.5.7'
           kustomize_build_dir: 'deployment'
           kustomize_comment: true
-          kustomize_output_file: "deployment/rendered.yaml"
-          enable_alpha_plugins: true
+          kustomize_output_file: "new_deployment/rendered.yaml"
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+
+      - name: Push to deployment repo
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: "new_deployment"
+          destination-github-username: 'mlakewood'
+          destination-repository-name: 'argocd-test-deploy-repo'
+          user-email: underplank+deployments@gmail.com
+          target-branch: main
