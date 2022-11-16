@@ -13,6 +13,10 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
+      - name: Set outputs
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -27,6 +31,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: argocd-test
           IMAGE_TAG: simple-flask-test
+          GIT_SHA: ${{ steps.vars.outputs.sha_short }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$GIT_SHA .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$GIT_SHA
