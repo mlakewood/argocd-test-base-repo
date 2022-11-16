@@ -7,4 +7,6 @@ namespace: python-demo-app
 images:
 - name: python-demo-app
   newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test
-  newTag: main-ea1f1eb
+  newTag: foo
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
