@@ -30,7 +30,6 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: argocd-test
-          IMAGE_TAG: simple-flask-test
           GIT_SHA: ${{ steps.vars.outputs.sha_short }}
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
         run: |
@@ -40,8 +39,7 @@ jobs:
       - name: Build integration tests image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: argocd-test
-          IMAGE_TAG: simple-flask-integration-tests
+          ECR_REPOSITORY: argocd-test-integration-tests
           GIT_SHA: ${{ steps.vars.outputs.sha_short }}
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
         run: |
