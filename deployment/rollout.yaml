@@ -3,7 +3,7 @@ kind: Rollout
 metadata:
   name: python-demo-app
 spec:
-  replicas: 2
+  replicas: 4
   strategy:
     canary:
       steps:
