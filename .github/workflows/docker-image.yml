@@ -8,6 +8,8 @@ jobs:
   build:
     name: Build and Publish Image
     runs-on: self-hosted
+    container:
+      image: ubuntu:22.04
 
     steps:
       - name: Check out code
