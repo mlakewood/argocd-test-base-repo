@@ -8,8 +8,8 @@ jobs:
   build:
     name: Build and Publish Image
     runs-on: self-hosted
-    container:
-      image: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/customized-runner:latest
+    # container:
+    #   image: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/customized-runner:latest
 
     steps:
       - name: Check out code
@@ -51,6 +51,11 @@ jobs:
       - name: Unit tests
         run: echo "looks like you havent run any tests??"
   
+      - name: install kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          
+
       # - name: Update Image Version
       #   uses: karancode/kustomize-github-action@master
       #   run: "kustomize edit set image 'python-demo-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test:$BRANCH_NAME-$GIT-SHA'"
