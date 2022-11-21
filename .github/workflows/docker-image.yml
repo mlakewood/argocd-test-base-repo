@@ -53,6 +53,7 @@ jobs:
   
       - name: install kustomize
         run: |
+          cd deployment
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
           ./kustomize edit set image 'python-demo-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test:$BRANCH_NAME-$GIT-SHA'
 
