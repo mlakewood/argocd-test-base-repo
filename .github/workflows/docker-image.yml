@@ -9,7 +9,7 @@ jobs:
     name: Build and Publish Image
     runs-on: self-hosted
     container:
-      image: ubuntu:22.04
+      image: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/customized-runner:latest
 
     steps:
       - name: Check out code
