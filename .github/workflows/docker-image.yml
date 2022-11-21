@@ -28,41 +28,44 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      # - name: Build, tag, and push image to Amazon ECR
-      #   env:
-      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #     ECR_REPOSITORY: argocd-test
-      #     GIT_SHA: ${{ steps.vars.outputs.sha_short }}
-      #     BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
-      #   run: |
-      #     docker build --target web-server -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA .
-      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: argocd-test
+          GIT_SHA: ${{ steps.vars.outputs.sha_short }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        run: |
+          docker build --target web-server -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA
 
-      # - name: Build integration tests image
-      #   env:
-      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #     ECR_REPOSITORY: argocd-test-integration-tests
-      #     GIT_SHA: ${{ steps.vars.outputs.sha_short }}
-      #     BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
-      #   run: |
-      #     docker build --target integration-tests -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA .
-      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA
-  
+      - name: Build integration tests image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: argocd-test-integration-tests
+          GIT_SHA: ${{ steps.vars.outputs.sha_short }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        run: |
+          docker build --target integration-tests -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA
+
       - name: Unit tests
         run: echo "looks like you havent run any tests??"
-  
+
       - name: install kustomize
         working-directory: deployment
+        env:
+          GIT_SHA: ${{ steps.vars.outputs.sha_short }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
           ./kustomize edit set image 'python-demo-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test:$BRANCH_NAME-$GIT-SHA'
 
-      - name: 'Kustomize Build'
+      - name: "Kustomize Build"
         id: kustomize
         uses: karancode/kustomize-github-action@master
         with:
-          kustomize_version: '4.5.7'
-          kustomize_build_dir: 'deployment'
+          kustomize_version: "4.5.7"
+          kustomize_build_dir: "deployment"
           kustomize_comment: true
           kustomize_output_file: "new_deployment/deployment.yaml"
         env:
@@ -75,7 +78,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source-directory: "new_deployment"
-          destination-github-username: 'mlakewood'
-          destination-repository-name: 'argocd-test-deploy-repo'
+          destination-github-username: "mlakewood"
+          destination-repository-name: "argocd-test-deploy-repo"
           user-email: underplank+deployments@gmail.com
           target-branch: main
