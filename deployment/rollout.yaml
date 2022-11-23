@@ -8,7 +8,7 @@ spec:
     canary:
       steps:
       - setWeight: 20
-      - pause: {}
+      - pause: {duration: 5m}
       - analysis:
           templates:
           - templateName: integration-tests
