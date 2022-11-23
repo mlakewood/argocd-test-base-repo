@@ -2,6 +2,7 @@ resources:
 - rollout.yaml
 - service.yaml
 - namespace.yaml
+- analysis_template.yaml
 namespace: python-demo-app
 
 images:
