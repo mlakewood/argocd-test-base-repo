@@ -1,18 +1,9 @@
-# - rollout.yaml
+
 resources:
 - service.yaml
 - namespace.yaml
 - analysis_template.yaml
-# patchesStrategicMerge:
-# - analysis_template_patch.yaml
-# patchesJson6902:
-# - target:
-#     group: argoproj.io
-#     version: v1alpha1
-#     kind: AnalysisTemplate
-#     name: integration-tests
-#   path: analysis_template_patch.yaml
-
+- rollout.yaml
 namespace: python-demo-app
 
 images:
