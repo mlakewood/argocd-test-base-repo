@@ -59,7 +59,8 @@ jobs:
         run: |
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
           ./kustomize edit set image "python-demo-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test:$BRANCH_NAME-$GIT_SHA"
-
+          ./kustomize edit set image "integration-tests=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test-integration-tests:$BRANCH_NAME-$GIT_SHA"
+          
       - name: "Kustomize Build"
         id: kustomize
         uses: karancode/kustomize-github-action@master
