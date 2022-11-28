@@ -28,10 +28,20 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push image to Amazon ECR
+      - name: Build Front App
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: argocd-test
+          ECR_REPOSITORY: front-app
+          GIT_SHA: ${{ steps.vars.outputs.sha_short }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        run: |
+          docker build --target web-server -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA
+
+      - name: Build Back App
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: back-app
           GIT_SHA: ${{ steps.vars.outputs.sha_short }}
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
@@ -52,13 +62,14 @@ jobs:
         run: echo "looks like you havent run any tests??"
 
       - name: install kustomize
-        working-directory: deployment
+        working-directory: deployment/prod
         env:
           GIT_SHA: ${{ steps.vars.outputs.sha_short }}
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-          ./kustomize edit set image "python-demo-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test:$BRANCH_NAME-$GIT_SHA"
+          ./kustomize edit set image "front-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/front-app:$BRANCH_NAME-$GIT_SHA"
+          ./kustomize edit set image "back-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/back-app:$BRANCH_NAME-$GIT_SHA"
           ./kustomize edit set image "integration-tests=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test-integration-tests:$BRANCH_NAME-$GIT_SHA"
           
       - name: "Kustomize Build"
@@ -66,7 +77,7 @@ jobs:
         uses: karancode/kustomize-github-action@master
         with:
           kustomize_version: "4.5.7"
-          kustomize_build_dir: "deployment"
+          kustomize_build_dir: "deployment/prod"
           kustomize_comment: true
           kustomize_output_file: "new_deployment/deployment.yaml"
         env:

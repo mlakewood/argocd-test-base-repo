@@ -1,17 +1,16 @@
 
 resources:
 - service.yaml
-- namespace.yaml
 - analysis_template.yaml
-- rollout.yaml
-namespace: python-demo-app
+- rollout_front.yaml
+- rollout_back.yaml
 
 images:
 - name: integration-tests
   newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/dummy
-  newTag: bar3
-- name: python-demo-app
-  newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test
-  newTag: foo
+- name: front-app
+  newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/front-app
+- name: back-app
+  newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/back-app
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization

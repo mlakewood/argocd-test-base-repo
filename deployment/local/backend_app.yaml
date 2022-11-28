@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-app
+  labels:
+    app: web-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: back-app
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: back-app
+    spec:
+      containers:
+        - name: back-app
+          image: back-app
+          command: ["venv/bin/python", "-m", "flask", "--app", "back_app", "run", "-h", "0.0.0.0", "-p", "5000"]
+          ports:
+            - containerPort: 5000

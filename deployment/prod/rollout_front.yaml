@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: front-app
+spec:
+  replicas: 4
+  strategy:
+    canary:
+      steps:
+      - setWeight: 20
+      - pause: {duration: 1m}
+      - analysis:
+          templates:
+          - templateName: integration-tests
+      - setWeight: 40
+      - pause: {duration: 1m}
+      - setWeight: 60
+      - pause: {duration: 1m}
+      - setWeight: 80
+      - pause: {duration: 1m}
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: front-app
+  template:
+    metadata:
+      labels:
+        app: front-app
+    spec:
+      securityContext:
+        runAsGroup: 1000
+        runAsUser: 1000
+      containers:
+        - name: front-app
+          image: front-app
+          ports:
+            - name: webserver
+              containerPort: 5000
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 256Mi
+              cpu: 200m
+          readinessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              port: webserver
+              path: /

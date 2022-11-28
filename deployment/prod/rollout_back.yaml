@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: python-demo-app
+  name: back-app
 spec:
   replicas: 4
   strategy:
@@ -21,18 +21,18 @@ spec:
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: python-demo-app
+      app: back-app
   template:
     metadata:
       labels:
-        app: python-demo-app
+        app: back-app
     spec:
       securityContext:
         runAsGroup: 1000
         runAsUser: 1000
       containers:
-        - name: python-demo-app
-          image: python-demo-app
+        - name: back-app
+          image: back-app
           ports:
             - name: webserver
               containerPort: 5000

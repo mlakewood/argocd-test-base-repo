@@ -1,0 +1,18 @@
+apiVersion: skaffold/v4beta1
+kind: Config
+metadata:
+  name: argocd-test-base-repo
+build:
+  artifacts:
+  - image: front-app
+    docker:
+      dockerfile: Dockerfile
+      target: front-app
+  - image: back-app
+    docker:
+      dockerfile: Dockerfile
+      target: back-app
+manifests:
+  kustomize:
+    paths:
+    - deployment/local
