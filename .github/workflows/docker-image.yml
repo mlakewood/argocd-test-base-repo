@@ -35,7 +35,7 @@ jobs:
           GIT_SHA: ${{ steps.vars.outputs.sha_short }}
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
-          docker build --target web-server -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA .
+          docker build --target front-app -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA
 
       - name: Build Back App
@@ -45,7 +45,7 @@ jobs:
           GIT_SHA: ${{ steps.vars.outputs.sha_short }}
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
-          docker build --target web-server -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA .
+          docker build --target back-app -t $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$BRANCH_NAME-$GIT_SHA
 
       - name: Build integration tests image
