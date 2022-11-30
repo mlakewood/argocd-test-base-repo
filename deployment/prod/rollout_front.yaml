@@ -11,9 +11,6 @@ spec:
         labels:
           release: canary
       stableService: front-app
-      stableMetadata:
-        labels:
-          release: stable
       trafficRouting:
         managedRoutes:
           - name: production

@@ -5,7 +5,6 @@ metadata:
 spec:
   selector:
     app: front-app
-    release: stable
   ports:
     - name: http
       port: 8080
@@ -18,7 +17,6 @@ metadata:
 spec:
   selector:
     app: back-app
-    release: stable
   ports:
     - name: http
       port: 8081
