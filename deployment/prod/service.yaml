@@ -25,10 +25,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: front-app-preview
+  name: front-app-canary
 spec:
   selector:
-    app: front-app-preview
+    app: front-app-canary
   ports:
     - name: http
       port: 8080
@@ -37,10 +37,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: back-app-preview
+  name: back-app-canary
 spec:
   selector:
-    app: back-app-preview
+    app: back-app-canary
   ports:
     - name: http
       port: 8081
