@@ -4,6 +4,7 @@ resources:
 - analysis_template.yaml
 - rollout_front.yaml
 - rollout_back.yaml
+- namespace.yaml
 
 images:
 - name: integration-tests
