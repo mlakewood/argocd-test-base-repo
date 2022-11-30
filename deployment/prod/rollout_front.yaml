@@ -8,7 +8,7 @@ spec:
     canary:
       steps:
       - setCanaryScale:
-        replicas: 1  // will scale up the 1 canary pod without steering any traffic
+          replicas: 1  // will scale up the 1 canary pod without steering any traffic
       - analysis:
           templates:
           - templateName: integration-tests
