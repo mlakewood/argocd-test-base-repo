@@ -73,8 +73,8 @@ jobs:
           kustomize edit set image "front-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/front-app:$BRANCH_NAME-$GIT_SHA"
           kustomize edit set image "back-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/back-app:$BRANCH_NAME-$GIT_SHA"
           kustomize edit set image "integration-tests=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test-integration-tests:$BRANCH_NAME-$GIT_SHA"
-          mkdir -p ../new_deployment
-          kustomize build . --output ../new_deployment/deployment.yaml
+          mkdir -p ../../new_deployment
+          kustomize build . --output ../../new_deployment/deployment.yaml
           
       # - name: "Kustomize Build"
       #   id: kustomize
