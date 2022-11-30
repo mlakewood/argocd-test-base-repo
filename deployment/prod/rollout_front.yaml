@@ -8,6 +8,10 @@ spec:
     canary:
       canaryService: front-app-canary
       stableService: front-app
+      trafficRouting:
+        managedRoutes:
+          - name: production
+          - name: canary
       steps:
       - setCanaryScale:
           replicas: 1
