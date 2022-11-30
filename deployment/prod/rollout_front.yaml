@@ -7,11 +7,15 @@ spec:
   strategy:
     canary:
       steps:
-      - setWeight: 20
-      - pause: {duration: 1m}
+      - setCanaryScale:
+        replicas: 1  // will scale up the 1 canary pod without steering any traffic
       - analysis:
           templates:
           - templateName: integration-tests
+      - setCanaryScale:
+          matchTrafficWeight: true
+      - setWeight: 20
+      - pause: {duration: 1m}
       - setWeight: 40
       - pause: {duration: 1m}
       - setWeight: 60
