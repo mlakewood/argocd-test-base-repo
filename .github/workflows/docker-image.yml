@@ -71,9 +71,9 @@ jobs:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
           # curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-          ./kustomize edit set image "front-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/front-app:$BRANCH_NAME-$GIT_SHA"
-          ./kustomize edit set image "back-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/back-app:$BRANCH_NAME-$GIT_SHA"
-          ./kustomize edit set image "integration-tests=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test-integration-tests:$BRANCH_NAME-$GIT_SHA"
+          kustomize edit set image "front-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/front-app:$BRANCH_NAME-$GIT_SHA"
+          kustomize edit set image "back-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/back-app:$BRANCH_NAME-$GIT_SHA"
+          kustomize edit set image "integration-tests=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test-integration-tests:$BRANCH_NAME-$GIT_SHA"
           
       - name: "Kustomize Build"
         id: kustomize
