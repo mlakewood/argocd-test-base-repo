@@ -47,4 +47,4 @@ spec:
             initialDelaySeconds: 10
             httpGet:
               port: webserver
-              path: /
+              path: /message
