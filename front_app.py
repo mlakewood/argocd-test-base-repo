@@ -3,6 +3,9 @@ import requests
 
 app = Flask(__name__)
 
+@app.route("/health")
+def health():
+    return "ok"
 
 @app.route("/")
 def hello_world():
