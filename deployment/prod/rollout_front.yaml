@@ -41,6 +41,7 @@ spec:
     metadata:
       labels:
         app: front-app
+        instrumentation.opentelemetry.io/inject-python: "true"
     spec:
       securityContext:
         runAsGroup: 1000
