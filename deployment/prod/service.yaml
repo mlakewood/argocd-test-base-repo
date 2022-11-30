@@ -29,7 +29,7 @@ metadata:
 spec:
   selector:
     app: front-app
-    release: canary
+    # release: canary
   ports:
     - name: http
       port: 8080
@@ -42,7 +42,7 @@ metadata:
 spec:
   selector:
     app: back-app
-    release: canary
+    # release: canary
   ports:
     - name: http
       port: 8081
