@@ -61,13 +61,16 @@ jobs:
       - name: Unit tests
         run: echo "looks like you havent run any tests??"
 
+      - name: Install Kustomize
+        uses: imranismail/setup-kustomize@v2
+      
       - name: install kustomize
         working-directory: deployment/prod
         env:
           GIT_SHA: ${{ steps.vars.outputs.sha_short }}
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
-          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          # curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
           ./kustomize edit set image "front-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/front-app:$BRANCH_NAME-$GIT_SHA"
           ./kustomize edit set image "back-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/back-app:$BRANCH_NAME-$GIT_SHA"
           ./kustomize edit set image "integration-tests=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test-integration-tests:$BRANCH_NAME-$GIT_SHA"
