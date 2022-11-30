@@ -6,11 +6,11 @@ spec:
   replicas: 4
   strategy:
     canary:
-      canaryService: front-app-canary
+      canaryService: back-app-canary
       canaryMetadata:
         labels:
           release: canary
-      stableService: front-app
+      stableService: back-app
       stableMetadata:
         labels:
           release: stable
