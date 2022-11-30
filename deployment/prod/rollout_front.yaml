@@ -7,7 +7,13 @@ spec:
   strategy:
     canary:
       canaryService: front-app-canary
+      canaryMetadata:
+        labels:
+          release: canary
       stableService: front-app
+      stableMetadata:
+        labels:
+          release: stable
       trafficRouting:
         managedRoutes:
           - name: production
