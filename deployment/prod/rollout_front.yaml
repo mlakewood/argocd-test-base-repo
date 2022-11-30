@@ -51,6 +51,11 @@ spec:
           ports:
             - name: webserver
               containerPort: 5000
+          env:
+          - name: BACK_APP_HOST
+            value: "back-app.python-demo-app.svc.cluster.local"
+          - name: BACK_APP_PORT
+            value: "8081"
           resources:
             requests:
               memory: 128Mi
