@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: front-app
+spec:
+  revisionHistoryLimit: 2
+  strategy:
+    canary:
+      canaryService: front-app-canary
+      canaryMetadata:
+        labels:
+          release: canary
+      stableService: front-app
+      stableMetadata:
+        labels:
+          release: stable
+      trafficRouting:
+        managedRoutes:
+          - name: production
+          - name: canary
+      steps:
+      - setCanaryScale:
+          replicas: 1
+          matchTrafficWeight: true
+      - analysis:
+          templates:
+          - templateName: integration-tests
+      - setWeight: 20
+      - pause: {duration: 1m}
+      - setWeight: 40
+      - pause: {duration: 1m}
+      - setWeight: 60
+      - pause: {duration: 1m}
+      - setWeight: 80
+      - pause: {duration: 1m}
+  

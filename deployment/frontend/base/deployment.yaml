@@ -1,16 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: front-app
-  labels:
-    app: web-service
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: front-app
-  strategy:
-    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -22,10 +18,3 @@ spec:
           command: ["venv/bin/python", "-m", "flask", "--app", "front_app", "run", "-h", "0.0.0.0", "-p", "5000"]
           ports:
             - containerPort: 5000
-          env:
-            - name: APP_BACK_APP_HOST
-              value: "back-app.mlakewood.svc.cluster.local"
-            - name: APP_BACK_APP_PORT
-              value: "8081"
-            - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
-              value: "grpc://simplest-collector.opentelemetry.svc.cluster.local:4317"

@@ -1,17 +1,21 @@
+namespace: python-demo-app
 
 resources:
-- service.yaml
-- analysis_template.yaml
-- rollout_front.yaml
-- rollout_back.yaml
-- namespace.yaml
+- ../../base
+
+components:
+  - ../../variants/prod
+
+patchesStrategicMerge:
+- deployment.yaml
+- version.yaml
+- replicas.yaml
+- settings.yaml
+- rollout.yaml
 
 images:
 - name: integration-tests
   newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/dummy
-- name: front-app
-  newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/front-app
 - name: back-app
   newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/back-app
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
+

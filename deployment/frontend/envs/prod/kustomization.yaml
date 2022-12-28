@@ -14,6 +14,7 @@ patchesStrategicMerge:
 - version.yaml
 - replicas.yaml
 - settings.yaml
+- rollout.yaml
 
 images:
 - name: integration-tests

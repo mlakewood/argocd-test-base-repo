@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: back-app
   labels:
@@ -22,6 +22,3 @@ spec:
           command: ["venv/bin/python", "-m", "flask", "--app", "back_app", "run", "-h", "0.0.0.0", "-p", "5000"]
           ports:
             - containerPort: 5000
-          env:
-            - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
-              value: "grpc://simplest-collector.opentelemetry.svc.cluster.local:4317"

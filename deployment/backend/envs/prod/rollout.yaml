@@ -3,7 +3,7 @@ kind: Rollout
 metadata:
   name: back-app
 spec:
-  replicas: 4
+  revisionHistoryLimit: 2
   strategy:
     canary:
       canaryService: back-app-canary
@@ -31,33 +31,4 @@ spec:
       - pause: {duration: 1m}
       - setWeight: 80
       - pause: {duration: 1m}
-  revisionHistoryLimit: 2
-  selector:
-    matchLabels:
-      app: back-app
-  template:
-    metadata:
-      labels:
-        app: back-app
-    spec:
-      securityContext:
-        runAsGroup: 1000
-        runAsUser: 1000
-      containers:
-        - name: back-app
-          image: back-app
-          ports:
-            - name: webserver
-              containerPort: 5000
-          resources:
-            requests:
-              memory: 128Mi
-              cpu: 100m
-            limits:
-              memory: 256Mi
-              cpu: 200m
-          readinessProbe:
-            initialDelaySeconds: 10
-            httpGet:
-              port: webserver
-              path: /message
+  

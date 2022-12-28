@@ -2,16 +2,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: front-app
+  name: back-app
 spec:
   template:
     spec:
       containers:
-        - name: front-app
+        - name: back-app
           env:
-            - name: APP_BACK_APP_HOST
-              value: "back-app.mlakewood.svc.cluster.local"
-            - name: APP_BACK_APP_PORT
-              value: "8081"
             - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
               value: "grpc://simplest-collector.opentelemetry.svc.cluster.local:4317"

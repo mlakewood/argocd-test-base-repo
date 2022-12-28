@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: python-demo-ap
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/mlakewood/argocd-test-deploy-repo
+      revision: HEAD
+      directories:
+      - path: "*"
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/mlakewood/argocd-test-deploy-repo
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: python-demo-app
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
