@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: integration-tests
+spec:
+  metrics:
+    - name: integration-tests
+      provider:
+        job:
+          spec:
+            backoffLimit: 1
+            template:
+              spec:
+                containers:
+                  - name: integration-tests
+                    image: integration-tests
+                restartPolicy: Never

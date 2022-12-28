@@ -27,3 +27,5 @@ spec:
               value: "back-app.mlakewood.svc.cluster.local"
             - name: APP_BACK_APP_PORT
               value: "8081"
+            - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+              value: "grpc://simplest-collector.opentelemetry.svc.cluster.local:4317"

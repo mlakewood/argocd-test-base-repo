@@ -1,0 +1,13 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-app
+spec:
+  template:
+    spec:
+      containers:
+        - name: front-app
+          env:
+          - name: ENV
+            value: "local"

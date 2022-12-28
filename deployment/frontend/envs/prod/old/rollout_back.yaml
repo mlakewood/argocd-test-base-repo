@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: front-app
+  name: back-app
 spec:
   replicas: 4
   strategy:
     canary:
-      canaryService: front-app-canary
+      canaryService: back-app-canary
       canaryMetadata:
         labels:
           release: canary
-      stableService: front-app
+      stableService: back-app
       stableMetadata:
         labels:
           release: stable
@@ -25,8 +25,6 @@ spec:
       - analysis:
           templates:
           - templateName: integration-tests
-      - setWeight: 20
-      - pause: {duration: 1m}
       - setWeight: 40
       - pause: {duration: 1m}
       - setWeight: 60
@@ -36,27 +34,21 @@ spec:
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: front-app
+      app: back-app
   template:
     metadata:
       labels:
-        app: front-app
-        instrumentation.opentelemetry.io/inject-python: "true"
+        app: back-app
     spec:
       securityContext:
         runAsGroup: 1000
         runAsUser: 1000
       containers:
-        - name: front-app
-          image: front-app
+        - name: back-app
+          image: back-app
           ports:
             - name: webserver
               containerPort: 5000
-          env:
-          - name: APP_BACK_APP_HOST
-            value: "back-app.python-demo-app.svc.cluster.local"
-          - name: APP_BACK_APP_PORT
-            value: "8081"
           resources:
             requests:
               memory: 128Mi
@@ -68,4 +60,4 @@ spec:
             initialDelaySeconds: 10
             httpGet:
               port: webserver
-              path: /health
+              path: /message
