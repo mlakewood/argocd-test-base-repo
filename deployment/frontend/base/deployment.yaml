@@ -18,3 +18,5 @@ spec:
           command: ["venv/bin/python", "-m", "flask", "--app", "front_app", "run", "-h", "0.0.0.0", "-p", "5000"]
           ports:
             - containerPort: 5000
+      nodeSelector:
+        kubernetes.io/arch: arm64 
