@@ -71,7 +71,7 @@ jobs:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
           kustomize edit set image "front-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/front-app:$BRANCH_NAME-$GIT_SHA"
-          kustomize edit set image "integration-tests=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test-integration-tests:$BRANCH_NAME-$GIT_SHA"
+          kustomize edit set image "integration-tests-image=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test-integration-tests:$BRANCH_NAME-$GIT_SHA"
           mkdir -p ../../../../new_deployment/frontend
           kustomize build . --output ../../../../new_deployment/frontend/deployment.yaml
 
@@ -82,7 +82,7 @@ jobs:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
           kustomize edit set image "back-app=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/back-app:$BRANCH_NAME-$GIT_SHA"
-          kustomize edit set image "integration-tests=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test-integration-tests:$BRANCH_NAME-$GIT_SHA"
+          kustomize edit set image "integration-tests-image=220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test-integration-tests:$BRANCH_NAME-$GIT_SHA"
           mkdir -p ../../../../new_deployment/backend
           kustomize build . --output ../../../../new_deployment/backend/deployment.yaml
 
