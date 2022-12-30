@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
-  name: integration-tests-front-app
+  name: integration-tests-back-app
 spec:
   metrics:
-    - name: integration-tests-front-app
+    - name: integration-tests-back-app
       provider:
         job:
           spec:
