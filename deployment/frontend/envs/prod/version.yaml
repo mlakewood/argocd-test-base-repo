@@ -8,4 +8,4 @@ spec:
     spec:
       containers:
         - name: front-app
-          image: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/front-app
+          image: front-app

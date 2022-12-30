@@ -1,6 +1,0 @@
-kind: Namespace
-apiVersion: v1
-metadata:
-  name: python-demo-app
-  labels:
-    name: python-demo-app
