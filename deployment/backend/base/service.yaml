@@ -16,7 +16,8 @@ metadata:
   name: back-app-canary
 spec:
   selector:
-    app: back-app-canary
+    app: back-app
+    release: canary
   ports:
     - name: http
       port: 8080

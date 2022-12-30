@@ -16,7 +16,7 @@ metadata:
   name: front-app-canary
 spec:
   selector:
-    app: front-app-canary
+    app: front-app
   ports:
     - name: http
       port: 8080
