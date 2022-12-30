@@ -20,7 +20,7 @@ images:
 - name: front-app-image
   newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/front-app
 - name: integration-tests-image
-  newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/dummy
+  newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test-integration-tests
 
 openapi:
   path: https://github.com/argoproj/argo-schema-generator/raw/main/schema/argo_all_k8s_kustomize_schema.json
