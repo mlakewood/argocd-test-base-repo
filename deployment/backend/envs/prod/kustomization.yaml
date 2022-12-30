@@ -15,7 +15,7 @@ patchesStrategicMerge:
 
 images:
 - name: integration-tests
-  newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/dummy
+  newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/argocd-test-integration-tests
 - name: back-app
   newName: 220445851985.dkr.ecr.ap-southeast-2.amazonaws.com/back-app
 
